@@ -1,65 +1,76 @@
 let playerScore = 0;
 let computerScore = 0;
-// function getComputerChoice uses random generator for computer choice
+
+const result = document.getElementById("result");
+const score = document.getElementById("score");
+const buttons = document
+  .getElementById("playerContainer")
+  .querySelectorAll("button");
+const congrats = document.getElementById("congrats");
+const reloadButton = document.getElementById("reload");
+
+// generates random computer choice
 function getComputerChoice() {
   const choices = ["rock", "paper", "scissors"];
   const random = Math.floor(Math.random() * choices.length);
   return random, choices[random];
 }
-function getPlayerChoice() {
-  const choice = prompt("Test").toLowerCase();
-  return choice;
-}
-// playRound calculates the round and returns msg as a string
-function playRound() {
-  if (computerSelection != playerSelection) {
-    if (computerSelection == "rock") {
-      if (playerSelection == "paper") {
-        return "You win! Paper beats rock.";
-      } else {
-        return "You lose! Rock beats scissors.";
-      }
-    } else if (computerSelection == "paper") {
-      if (playerSelection == "rock") {
-        return "You lose! Paper beats rock.";
-      } else {
-        return "You win! Scissors beats paper.";
-      }
-    } else {
-      if (playerSelection == "paper") {
-        return "You lose! Scissors beats paper.";
-      } else {
-        return "You win! Rock beats scissors";
-      }
-    }
-  } else {
-    return "TIES";
-  }
-}
-// getScore calculates the score based on the string from playRound
-function getScore() {
-  if (playRound().search("win") > 0) {
+
+// calculates the round and writes result
+function playRound(human, computer) {
+  if (human == computer) {
+    console.log("draw");
+    result.innerHTML = "Draw";
+  } else if (
+    (human == "scissors" && computer == "paper") ||
+    (human == "paper" && computer == "rock") ||
+    (human == "rock" && computer == "scissors")
+  ) {
+    result.innerHTML = `You win - ${human} beats ${computer}!`;
     playerScore++;
-  } else if (playRound().search("lose") > 0) {
+    console.log(`win ${human} beats ${computer}`);
+  } else {
+    result.innerHTML = `You lose - ${computer} beats ${human}!`;
     computerScore++;
+    console.log(`You lose - ${computer} beats ${human}!`);
   }
 }
-// This is the loop for bo5. Endgame "if-s" are sloppy, but it works.
-for (i = 0; i < 5; i++) {
-  var computerSelection = getComputerChoice();
-  var playerSelection = getPlayerChoice();
-  console.log(
-    "Player: " + playerSelection + " | Computer: " + computerSelection
-  );
-  playRound(playerSelection, computerSelection);
-  getScore();
-  console.log(playRound());
-  if (i == 4 && playerScore > computerScore) {
-    console.log("End of game! You win!");
-  } else if (i == 4 && playerScore < computerScore) {
-    console.log("End of game! You lose!");
-  } else if (i == 4 && playerScore == computerScore) {
-    console.log("DRAW. Better luck next time!");
+// checks bo5, game over announcement, disable player buttons, reveal reload button
+function gameOver() {
+  if (playerScore == 5 || computerScore == 5) {
+    buttons.forEach((button) => {
+      button.disabled = true;
+    });
+    reloadButton.style.visibility = "visible";
+    if (playerScore > computerScore) {
+      congrats.innerHTML = "You Are The Winner!";
+    } else {
+      congrats.innerHTML = "Pathetic Looser!";
+    }
   }
-  console.log("Player: " + playerScore + " | Computer: " + computerScore);
 }
+reloadButton.addEventListener("click", () => {
+  playerScore = 0;
+  computerScore = 0;
+  score.innerHTML = "0 : 0";
+  result.innerHTML = "";
+  congrats.innerHTML = "";
+  buttons.forEach((button) => {
+    button.disabled = false;
+  });
+  reloadButton.style.visibility = "hidden";
+});
+// loop adds event listener to clicked button and writes score
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    let playerChoice = button.id;
+    let ComputerChoice = getComputerChoice();
+    console.log(playerChoice);
+    console.log(ComputerChoice);
+    playRound(playerChoice, ComputerChoice);
+    score.innerHTML = `${playerScore} : ${computerScore}`;
+    gameOver();
+    console.log(playerScore);
+    console.log(computerScore);
+  });
+});
