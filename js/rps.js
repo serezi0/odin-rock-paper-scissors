@@ -19,8 +19,7 @@ function getComputerChoice() {
 // calculates the round and writes result
 function playRound(human, computer) {
   if (human == computer) {
-    console.log("draw");
-    result.innerHTML = "Draw";
+    result.innerHTML = "Draw!";
   } else if (
     (human == "scissors" && computer == "paper") ||
     (human == "paper" && computer == "rock") ||
@@ -28,13 +27,12 @@ function playRound(human, computer) {
   ) {
     result.innerHTML = `You win - ${human} beats ${computer}!`;
     playerScore++;
-    console.log(`win ${human} beats ${computer}`);
   } else {
     result.innerHTML = `You lose - ${computer} beats ${human}!`;
     computerScore++;
-    console.log(`You lose - ${computer} beats ${human}!`);
   }
 }
+
 // checks bo5, game over announcement, disable player buttons, reveal reload button
 function gameOver() {
   if (playerScore == 5 || computerScore == 5) {
@@ -49,6 +47,8 @@ function gameOver() {
     }
   }
 }
+
+// reloads the game
 reloadButton.addEventListener("click", () => {
   playerScore = 0;
   computerScore = 0;
@@ -60,6 +60,7 @@ reloadButton.addEventListener("click", () => {
   });
   reloadButton.style.visibility = "hidden";
 });
+
 // loop adds event listener to clicked button and writes score
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -70,7 +71,5 @@ buttons.forEach((button) => {
     playRound(playerChoice, ComputerChoice);
     score.innerHTML = `${playerScore} : ${computerScore}`;
     gameOver();
-    console.log(playerScore);
-    console.log(computerScore);
   });
 });
