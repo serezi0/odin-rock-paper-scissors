@@ -6,21 +6,28 @@
     <title>Rock Paper Scissors</title>
     <script defer type="text/javascript" src="/js/rps.js"></script>
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="container">
       <h1>ROCK PAPER SCISSORS</h1>
+      <h2>Choose, please!</h2>
       <div id="playerContainer">
         <button id="rock">Rock</button>
         <button id="paper">Paper</button>
         <button id="scissors">Scissors</button>
       </div>
       <div id="resultContainer">
-        <div id="score">0 : 0</div>
-        <div id="result">result</div>
+        <h2 id="score">0 : 0</h2>
+        <h2 id="result"></h2>
       </div>
       <div id="gamOver">
-        <div id="congrats"></div>
+        <h2 id="congrats"></h2>
         <button id="reload">Play again?</button>
       </div>
     </div>
